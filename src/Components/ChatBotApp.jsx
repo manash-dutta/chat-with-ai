@@ -23,6 +23,13 @@ const ChatBotApp = ({
     setMessages(activeChatObj ? activeChatObj.messages : []);
   }, [activeChat, chats]);
 
+  useEffect(() => {
+    if (activeChat) {
+      const storedMessages = JSON.parse(localStorage.getItem(activeChat)) || [];
+      setMessages(storedMessages);
+    }
+  }, [activeChat]); 
+
   const handleEmojiSelect = (emoji) => {
     setInputValue((prevInput) => prevInput + emoji.native);
   };
@@ -46,6 +53,7 @@ const ChatBotApp = ({
     } else {
       const updatedMessages = [...messages, newMessage];
       setMessages(updatedMessages);
+      localStorage.setItem(activeChat, JSON.stringify(updatedMessages));
       setInputValue("");
 
       const updatedChats = chats.map((chat) => {
@@ -55,6 +63,7 @@ const ChatBotApp = ({
         return chat;
       });
       setChats(updatedChats);
+      localStorage.setItem("chats", JSON.stringify(updatedChats));
       setIsTyping(true);
 
       try {
@@ -85,6 +94,10 @@ const ChatBotApp = ({
 
         const updatedMessagesWithResponse = [...updatedMessages, newResponse];
         setMessages(updatedMessagesWithResponse);
+        localStorage.setItem(
+          activeChat,
+          JSON.stringify(updatedMessagesWithResponse)
+        );
         setIsTyping(false);
 
         const updatedChatsWithResponse = chats.map((chat) => {
@@ -94,6 +107,7 @@ const ChatBotApp = ({
           return chat;
         });
         setChats(updatedChatsWithResponse);
+        localStorage.setItem("chats", JSON.stringify(updatedChatsWithResponse));
       } catch (err) {
         console.log(err);
       }
@@ -117,6 +131,8 @@ const ChatBotApp = ({
 
     const updatedChats = chats.filter((chat) => chat.id !== id);
     setChats(updatedChats);
+    localStorage.setItem("chats", JSON.stringify(updatedChats));
+    localStorage.removeItem(id);
 
     const newActiveChat = updatedChats.length > 0 ? updatedChats[0].id : null;
     setActiveChat(newActiveChat);
