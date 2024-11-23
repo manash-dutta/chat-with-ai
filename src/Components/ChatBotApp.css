@@ -200,3 +200,60 @@
 .input-msg:focus::placeholder {
   opacity: 0;
 }
+
+.bx-menu,
+.close-list {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .bx-menu,
+  .close-list {
+    display: block;
+  }
+  .chat-app {
+    flex-direction: column;
+  }
+
+  .chat-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 200;
+  }
+
+  .chat-list.show {
+    transform: translateX(0);
+  }
+
+  .chat-window {
+    width: 100vw;
+  }
+
+  .chat-title h3 {
+    padding-left: 7rem;
+  }
+
+  .chat-title i.bx-menu {
+    font-size: 3rem;
+    display: block;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    left: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .chat-list {
+    width: 70%;
+  }
+
+  .picker {
+    left: 1rem;
+  }
+}

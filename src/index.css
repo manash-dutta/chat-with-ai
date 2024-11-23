@@ -19,3 +19,9 @@ button {
   cursor: pointer;
   border: none;
 }
+
+@media (max-width: 500px) {
+  html {
+    font-size: 9px; 
+  }
+}
